@@ -8,10 +8,8 @@
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden p-10 shadow-sm sm:rounded-lg">
-                @endif
-
                 @if ($errors->any())
-                    @foreach ($error->all() as $error)
+                    @foreach ($errors->all() as $error)
                         <div class="py-3 w-full rounded-3xl bg-red-500 text-white">
                             {{ $error }}
                         </div>

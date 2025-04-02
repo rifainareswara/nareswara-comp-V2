@@ -24,19 +24,19 @@
                     <div class="w-6 h-6 flex shrink-0">
                         <img src="assets/icons/global.svg" alt="icon">
                     </div>
-                    <p class="text-cp-dark-blue font-semibold">No 96, Anggapati Jakarta</p>
+                    <p class="text-cp-dark-blue font-semibold">Kp. Sawah Mede No. 41</p>
                 </div>
                 <div class="flex items-center gap-[10px]">
                     <div class="w-6 h-6 flex shrink-0">
                         <img src="assets/icons/call.svg" alt="icon">
                     </div>
-                    <p class="text-cp-dark-blue font-semibold">(021) 22081996</p>
+                    <p class="text-cp-dark-blue font-semibold">082295293138</p>
                 </div>
                 <div class="flex items-center gap-[10px]">
                     <div class="w-6 h-6 flex shrink-0">
                         <img src="assets/icons/monitor-mobbile.svg" alt="icon">
                     </div>
-                    <p class="text-cp-dark-blue font-semibold">shaynacomp.com</p>
+                    <p class="text-cp-dark-blue font-semibold">nareswara.com</p>
                 </div>
             </div>
         </div>
@@ -285,7 +285,7 @@
                         <img src="assets/logo/logo.svg" class="object-contain w-full h-full" alt="logo">
                     </div>
                     <div class="flex flex-col">
-                        <p id="CompanyName" class="font-extrabold text-xl leading-[30px] text-white">ShaynaComp</p>
+                        <p id="CompanyName" class="font-extrabold text-xl leading-[30px] text-white">Nareswara</p>
                         <p id="CompanyTagline" class="text-sm text-cp-light-grey">Build Futuristic Dreams</p>
                     </div>
                 </div>
@@ -349,7 +349,7 @@
             </div>
         </div>
         <div class="absolute -bottom-[135px] w-full">
-            <p class="font-extrabold text-[250px] leading-[375px] text-center text-white opacity-5">SHAYNA</p>
+            <p class="font-extrabold text-[250px] leading-[375px] text-center text-white opacity-5">NSRWRA</p>
         </div>
     </footer>
 @endsection

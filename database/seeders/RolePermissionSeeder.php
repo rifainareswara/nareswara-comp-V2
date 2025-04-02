@@ -58,8 +58,8 @@ class RolePermissionSeeder extends Seeder
 
         $user = User::create(
             [
-                'name' => 'SambadaComp',
-                'email' => 'super@admin.com',
+                'name' => 'Rifai',
+                'email' => 'rifai@nareswara.com',
                 'password' => bcrypt(123456),
             ]
         );

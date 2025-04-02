@@ -461,7 +461,7 @@
                             alt="logo">
                     </div>
                     <div class="flex flex-col">
-                        <p id="CompanyName" class="font-extrabold text-xl leading-[30px] text-white">ShaynaComp</p>
+                        <p id="CompanyName" class="font-extrabold text-xl leading-[30px] text-white">Nareswara</p>
                         <p id="CompanyTagline" class="text-sm text-cp-light-grey">Build Futuristic Dreams</p>
                     </div>
                 </div>
@@ -529,7 +529,7 @@
             </div>
         </div>
         <div class="absolute -bottom-[135px] w-full">
-            <p class="font-extrabold text-[250px] leading-[375px] text-center text-white opacity-5">SHAYNA</p>
+            <p class="font-extrabold text-[250px] leading-[375px] text-center text-white opacity-5">NRSWRA</p>
         </div>
     </footer>
     <div id="video-modal" tabindex="-1" aria-hidden="true"

@@ -44,15 +44,18 @@ pipeline {
                 dir('nareswara-comp-V2') {
                     script {
                         try {
-                            def containerExists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w 'nareswara_comp'", returnStatus: true) == 0
+                            // Cek apakah container "nareswara-db" sudah ada
+                            def dbContainerExists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w 'nareswara-db'", returnStatus: true) == 0
                             
-                            if (containerExists) {
-                                echo "Containers already exist. Restarting them..."
-                                sh 'docker compose up -d'
-                            } else {
-                                echo "Building and starting containers..."
-                                sh 'docker compose up -d --build'
+                            if (dbContainerExists) {
+                                echo "Stopping and removing existing nareswara-db container..."
+                                sh 'docker stop nareswara-db || true'
+                                sh 'docker rm nareswara-db || true'
                             }
+
+                            echo "Starting containers..."
+                            sh 'docker compose up -d --build'
+
                         } catch (Exception e) {
                             currentBuild.result = 'FAILURE'
                             error "Build failed: ${e.getMessage()}"

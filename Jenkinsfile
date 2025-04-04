@@ -20,17 +20,6 @@ pipeline {
             }
         }
 
-        stage('Preparation') {
-            steps {
-                echo "Building: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                
-                // Tulis Secret Text ke dalam file .env
-                script {
-                    writeFile file: '.env', text: env.ENV_FILE_CONTENT
-                }
-            }
-        }
-
         stage('Build') {
             steps {
                 script {
@@ -43,15 +32,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Migrate') {
-            steps {
-                script {
-                    sh 'docker exec -it nareswara-comp php artisan migrate:fresh --seed'
-                }
-            }
-        }
-    }
 
     post {
         always {

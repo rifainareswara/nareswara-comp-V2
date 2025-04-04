@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ENV_FILE_CONTENT = credentials('env-nareswara-comp') // Ambil sebagai secret text
+        ENV_FILE_CONTENT = credentials('env-nareswara-comp') // Secret text
     }
 
     options {
@@ -26,12 +26,33 @@ pipeline {
             }
         }
 
+        stage('Load Configuration') {
+            steps {
+                configFileProvider([
+                    configFile(fileId: 'Laravel_Env_Nareswara', variable: 'LARAVEL_ENV')
+                ]) {
+                    script {
+                        echo "Copying .env file from Manage Files..."
+                        sh 'cp $LARAVEL_ENV nareswara-comp-V2/.env'
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
-                dir('nareswara-comp-V2') { // Pastikan bekerja di dalam repositori
+                dir('nareswara-comp-V2') {
                     script {
                         try {
-                            sh 'docker compose up -d --build'
+                            def containerExists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w 'nareswara_comp'", returnStatus: true) == 0
+                            
+                            if (containerExists) {
+                                echo "Containers already exist. Restarting them..."
+                                sh 'docker compose up -d'
+                            } else {
+                                echo "Building and starting containers..."
+                                sh 'docker compose up -d --build'
+                            }
                         } catch (Exception e) {
                             currentBuild.result = 'FAILURE'
                             error "Build failed: ${e.getMessage()}"

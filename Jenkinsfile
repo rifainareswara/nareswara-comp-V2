@@ -50,6 +50,7 @@ pipeline {
             script {
                 sh 'docker exec -it nareswara-comp php artisan migrate:fresh --seed'
         }
+        }
     }
 
     post {

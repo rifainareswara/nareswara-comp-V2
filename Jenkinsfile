@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    sh 'https://github.com/rifainareswara/nareswara-comp-V2.git'
+                    sh 'git clone https://github.com/rifainareswara/nareswara-comp-V2.git'
                 }
             }
         }
@@ -43,13 +43,13 @@ pipeline {
                 }
             }
         }
-    }
 
-    stage('Migrate') {
-        steps {
-            script {
-                sh 'docker exec -it nareswara-comp php artisan migrate:fresh --seed'
-        }
+        stage('Migrate') {
+            steps {
+                script {
+                    sh 'docker exec -it nareswara-comp php artisan migrate:fresh --seed'
+                }
+            }
         }
     }
 

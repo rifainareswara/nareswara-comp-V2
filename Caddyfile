@@ -1,0 +1,9 @@
+{
+    auto_https off
+    admin localhost:2019
+}
+
+:80 {
+    root * /app/public
+    php_server
+}

@@ -15,19 +15,27 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    sh 'git clone https://github.com/rifainareswara/nareswara-comp-V2.git'
+                    if (fileExists('nareswara-comp-V2')) {
+                        echo "Repository already exists. Pulling latest changes..."
+                        sh 'cd nareswara-comp-V2 && git reset --hard && git pull origin main'
+                    } else {
+                        echo "Cloning repository..."
+                        sh 'git clone https://github.com/rifainareswara/nareswara-comp-V2.git'
+                    }
                 }
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    try {
-                        sh 'docker compose up -d --build'
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        error "Build failed: ${e.getMessage()}"
+                dir('nareswara-comp-V2') { // Pastikan bekerja di dalam repositori
+                    script {
+                        try {
+                            sh 'docker compose up -d --build'
+                        } catch (Exception e) {
+                            currentBuild.result = 'FAILURE'
+                            error "Build failed: ${e.getMessage()}"
+                        }
                     }
                 }
             }

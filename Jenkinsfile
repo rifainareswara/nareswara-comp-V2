@@ -39,35 +39,35 @@ pipeline {
             }
         }
 
-stage('Build') {
-    steps {
-        dir('nareswara-comp-V2') {
-            script {
-                try {
-                    // List of expected container names
-                    def containers = ['nareswara-db', 'nareswara-comp']
+        stage('Build') {
+            steps {
+                dir('nareswara-comp-V2') {
+                    script {
+                        try {
+                            // List of expected container names
+                            def containers = ['nareswara-db', 'nareswara-comp']
 
-                    containers.each { name ->
-                        def exists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w '${name}'", returnStatus: true) == 0
-                        if (exists) {
-                            echo "Stopping and removing existing container: ${name}"
-                            sh "docker stop ${name} || true"
-                            sh "docker rm ${name} || true"
+                            containers.each { name ->
+                                def exists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w '${name}'", returnStatus: true) == 0
+                                if (exists) {
+                                    echo "Stopping and removing existing container: ${name}"
+                                    sh "docker stop ${name} || true"
+                                    sh "docker rm ${name} || true"
+                                }
+                            }
+
+                            echo "Starting containers..."
+                            sh 'docker compose up -d --build'
+
+                        } catch (Exception e) {
+                            currentBuild.result = 'FAILURE'
+                            error "Build failed: ${e.getMessage()}"
                         }
                     }
-
-                    echo "Starting containers..."
-                    sh 'docker compose up -d --build'
-
-                } catch (Exception e) {
-                    currentBuild.result = 'FAILURE'
-                    error "Build failed: ${e.getMessage()}"
                 }
             }
         }
     }
-}
-
 
     post {
         always {

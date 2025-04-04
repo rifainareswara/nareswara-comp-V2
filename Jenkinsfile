@@ -12,6 +12,14 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    sh 'https://github.com/rifainareswara/nareswara-comp-V2.git'
+                }
+            }
+        }
+
         stage('Preparation') {
             steps {
                 echo "Building: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
@@ -34,6 +42,13 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    stage('Migrate') {
+        steps {
+            script {
+                sh 'docker exec -it nareswara-comp php artisan migrate:fresh --seed'
         }
     }
 

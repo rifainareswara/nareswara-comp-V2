@@ -55,8 +55,10 @@ pipeline {
 
     post {
         always {
-            def statusMessage = "Build Status: ${currentBuild.currentResult}"
-            echo statusMessage
+            script {
+                def statusMessage = "Build Status: ${currentBuild.currentResult}"
+                echo statusMessage
+            }
         }
     }
 }

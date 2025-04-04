@@ -39,32 +39,35 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                dir('nareswara-comp-V2') {
-                    script {
-                        try {
-                            // Cek apakah container "nareswara-db" sudah ada
-                            def dbContainerExists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w 'nareswara-db'", returnStatus: true) == 0
-                            
-                            if (dbContainerExists) {
-                                echo "Stopping and removing existing nareswara-db container..."
-                                sh 'docker stop nareswara-db || true'
-                                sh 'docker rm nareswara-db || true'
-                            }
+stage('Build') {
+    steps {
+        dir('nareswara-comp-V2') {
+            script {
+                try {
+                    // List of expected container names
+                    def containers = ['nareswara-db', 'nareswara-comp']
 
-                            echo "Starting containers..."
-                            sh 'docker compose up -d --build'
-
-                        } catch (Exception e) {
-                            currentBuild.result = 'FAILURE'
-                            error "Build failed: ${e.getMessage()}"
+                    containers.each { name ->
+                        def exists = sh(script: "docker ps -a --format '{{.Names}}' | grep -w '${name}'", returnStatus: true) == 0
+                        if (exists) {
+                            echo "Stopping and removing existing container: ${name}"
+                            sh "docker stop ${name} || true"
+                            sh "docker rm ${name} || true"
                         }
                     }
+
+                    echo "Starting containers..."
+                    sh 'docker compose up -d --build'
+
+                } catch (Exception e) {
+                    currentBuild.result = 'FAILURE'
+                    error "Build failed: ${e.getMessage()}"
                 }
             }
         }
     }
+}
+
 
     post {
         always {
